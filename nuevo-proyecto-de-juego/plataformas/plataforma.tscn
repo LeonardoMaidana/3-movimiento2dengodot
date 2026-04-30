@@ -9,9 +9,9 @@ size = Vector2(128, 128)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1751313877]
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1877725727]
+shape = SubResource("RectangleShape2D_mao73")
+
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=558567003]
 modulate = Color(0.8589588, 0.57288975, 0.05652649, 1)
 texture = ExtResource("1_7k1rk")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1877725727]
-shape = SubResource("RectangleShape2D_mao73")
