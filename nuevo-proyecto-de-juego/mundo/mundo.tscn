@@ -7,7 +7,6 @@
 [node name="Mundo" type="Node2D" unique_id=605737269]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1230935208]
-visible = false
 position = Vector2(896, 533)
 scale = Vector2(4.8461885, 4.100649)
 texture = ExtResource("1_gb8mx")
@@ -17,5 +16,18 @@ position = Vector2(76, 893)
 scale = Vector2(0.28083876, 1.0131385)
 
 [node name="Plataforma" parent="." unique_id=51090818 instance=ExtResource("2_plq2l")]
-position = Vector2(995, 1050)
+position = Vector2(938.00006, 1035)
 scale = Vector2(44.56588, -0.7258822)
+
+[node name="Plataforma2" parent="." unique_id=423026146 instance=ExtResource("2_plq2l")]
+position = Vector2(1219, 790)
+scale = Vector2(2.5424557, 0.35848323)
+
+[node name="Plataforma3" parent="." unique_id=831306266 instance=ExtResource("2_plq2l")]
+position = Vector2(1506.0001, 711.0002)
+rotation = -0.5335507
+scale = Vector2(2.5424557, 0.35848323)
+
+[node name="Plataforma4" parent="." unique_id=829786062 instance=ExtResource("2_plq2l")]
+position = Vector2(1797, 632)
+scale = Vector2(2.5424557, 0.35848323)

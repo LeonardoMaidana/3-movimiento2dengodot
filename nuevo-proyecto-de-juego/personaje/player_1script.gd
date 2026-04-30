@@ -1,28 +1,37 @@
 extends CharacterBody2D
 
 
-const SPEED = 400.0
-const JUMP_VELOCITY = -500.0
+const SPEED = 350.0
+const JUMP_VELOCITY = -450.0
 var  max_jumps = 2
 var jumps_left = 2
-var dash_speed = 800.0
-var dash_duration = 0.15
+var dash_speed = 600.0
+var dash_duration = 0.1
+var dash_cd = 2
+var dash_cd_timer = 0.0
 var dash_timer = 0.0
 var is_dashing = false
 var can_dash = true
 var dash_direction = Vector2.ZERO
+var last_h_direction = 1
 
 func _physics_process(delta: float) -> void:
+	
+	if dash_cd_timer > 0:
+		dash_cd_timer -= delta
+		if dash_cd_timer <= 0:
+			can_dash = true
 	#Implementacion de "Dash" / Disclaimer: una parte del script salio de un video y
 	#otras que fui probando-Que por ahora me sirven y funcionan
 	if Input.is_action_just_pressed("ui_accept") and can_dash:
 		is_dashing = true
 		can_dash = false
 		dash_timer = dash_duration
+		dash_cd_timer = dash_cd
 		# Lo de arriba lo pense, de como seria un dash pero lo de aca abajo,
 		#Entiendo por partes, Vector2, se que son las cordenadas que le dan al dash_direction
 		
-		dash_direction = Input.get_vector("ui_left","ui_right", "ui_up", "ui_accept")
+		dash_direction = Input.get_vector("ui_left","ui_right", "ui_up", "ui_down")
 		
 		if dash_direction == Vector2.ZERO:
 			dash_direction = Vector2(velocity.x, 0)
@@ -32,7 +41,7 @@ func _physics_process(delta: float) -> void:
 			#Quiero que el dash vaya para ahi y no solo a la derecha.
 			#En proximos commits voy a intentar resolverlo. Tengo una vaga idea.
 			if dash_direction == Vector2.ZERO:
-				dash_direction = Vector2.RIGHT
+				dash_direction = Vector2(last_h_direction, 0)
 	if is_dashing:
 		dash_timer -= delta
 		velocity = dash_direction.normalized() * dash_speed
@@ -44,20 +53,23 @@ func _physics_process(delta: float) -> void:
 			
 		return
 	#Implementacion de la gravedad
-	if !is_on_floor():
+	if not is_on_floor():
 		velocity += get_gravity() * delta
+		
+	if is_on_floor():
+		jumps_left = max_jumps
+		#if not can_dash:
+			#can_dash = true
 	#Implementacion del salto
 	if Input.is_action_just_pressed("ui_up") and jumps_left > 0:
 			velocity.y = JUMP_VELOCITY
 			jumps_left -= 1
 			
-	if is_on_floor():
-		jumps_left = max_jumps
-		can_dash = true
 		
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = direction * SPEED
+		last_h_direction = direction
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	move_and_slide()
