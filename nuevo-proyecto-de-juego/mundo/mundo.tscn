@@ -3,16 +3,18 @@
 [ext_resource type="Texture2D" uid="uid://dumn5si4l184q" path="res://assets/sky_01.png" id="1_gb8mx"]
 [ext_resource type="PackedScene" uid="uid://2dxg0tumxpwa" path="res://personaje/player1.tscn" id="1_qda3l"]
 [ext_resource type="PackedScene" uid="uid://bjodso7nbcbc5" path="res://plataformas/plataforma.tscn" id="2_plq2l"]
+[ext_resource type="PackedScene" uid="uid://ceem88qmfqaq8" path="res://Enemy's/enemy_1.tscn" id="4_yp6t0"]
 
 [node name="Mundo" type="Node2D" unique_id=605737269]
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1230935208]
+[node name="Fondo" type="Sprite2D" parent="." unique_id=1230935208]
+visible = false
 position = Vector2(896, 533)
 scale = Vector2(4.8461885, 4.100649)
 texture = ExtResource("1_gb8mx")
 
 [node name="Player1" parent="." unique_id=213477834 instance=ExtResource("1_qda3l")]
-position = Vector2(76, 893)
+position = Vector2(29, 922)
 scale = Vector2(0.28083876, 1.0131385)
 
 [node name="Plataforma" parent="." unique_id=51090818 instance=ExtResource("2_plq2l")]
@@ -31,3 +33,24 @@ scale = Vector2(2.5424557, 0.35848323)
 [node name="Plataforma4" parent="." unique_id=829786062 instance=ExtResource("2_plq2l")]
 position = Vector2(1797, 632)
 scale = Vector2(2.5424557, 0.35848323)
+
+[node name="Enemy1" parent="." unique_id=103710541 instance=ExtResource("4_yp6t0")]
+position = Vector2(1796, 924)
+patrol_speed = 300.0
+patrol_points = Array[Vector2]([Vector2(567, 923), Vector2(1796, 924), Vector2(567, 923)])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1589005365]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=760541353]
+offset_left = 66.0
+offset_top = 43.0
+offset_right = 128.0
+offset_bottom = 83.0
+
+[node name="UI_vida" type="Label" parent="CanvasLayer/HBoxContainer" unique_id=1060180294]
+layout_mode = 2
+text = "Vida:"
+
+[node name="UI_hp" type="Label" parent="CanvasLayer/HBoxContainer" unique_id=360667075]
+layout_mode = 2
+text = "40"

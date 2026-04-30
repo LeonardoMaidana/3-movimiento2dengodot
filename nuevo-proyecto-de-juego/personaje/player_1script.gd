@@ -1,19 +1,34 @@
 extends CharacterBody2D
 
-
-const SPEED = 350.0
-const JUMP_VELOCITY = -450.0
-var  max_jumps = 2
+@export var max_health = 40
+var current_health = 40
+var hp_label: Label = null
+@export var speed = 350.0
+@export var jump_velocity = -450.0
+@export var  max_jumps = 2
 var jumps_left = 2
-var dash_speed = 600.0
-var dash_duration = 0.1
-var dash_cd = 2
+@export var dash_speed = 600.0
+@export var dash_duration = 0.1
+@export var dash_cd = 2
 var dash_cd_timer = 0.0
 var dash_timer = 0.0
 var is_dashing = false
 var can_dash = true
 var dash_direction = Vector2.ZERO
 var last_h_direction = 1
+
+func _ready() -> void:
+	hp_label =get_tree().root.find_child("UI_hp", true, false)
+
+func take_damage(ammount: int) -> void:
+	current_health -= ammount
+	current_health = max(current_health, 0)
+	print("Jugador recibió daño! HP restante: ", current_health)
+	if hp_label:
+		hp_label.text = str(current_health)
+	if current_health <= 0:
+		print("Jugador muerto")
+		queue_free()
 
 func _physics_process(delta: float) -> void:
 	
@@ -30,7 +45,8 @@ func _physics_process(delta: float) -> void:
 		dash_cd_timer = dash_cd
 		# Lo de arriba lo pense, de como seria un dash pero lo de aca abajo,
 		#Entiendo por partes, Vector2, se que son las cordenadas que le dan al dash_direction
-		
+		#despues de toda la actualizacion, mejore el dash
+		#pero me hubiese gustado dejarlo mucho mejor
 		dash_direction = Input.get_vector("ui_left","ui_right", "ui_up", "ui_down")
 		
 		if dash_direction == Vector2.ZERO:
@@ -62,14 +78,14 @@ func _physics_process(delta: float) -> void:
 			#can_dash = true
 	#Implementacion del salto
 	if Input.is_action_just_pressed("ui_up") and jumps_left > 0:
-			velocity.y = JUMP_VELOCITY
+			velocity.y = jump_velocity
 			jumps_left -= 1
 			
 		
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = direction * speed
 		last_h_direction = direction
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
 	move_and_slide()
